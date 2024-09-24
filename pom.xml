@@ -4,14 +4,90 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.johnnyconsole</groupId>
-    <artifactId>TemperaturePredictionSuite</artifactId>
+    <groupId>com.johnnyconsole.temperature-suite</groupId>
+    <artifactId>temperature-suite</artifactId>
     <version>1.0</version>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>temperature-suite-ear</module>
+        <module>temperature-suite-ejb</module>
+        <module>temperature-suite-web</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <root.dir>${project.basedir}</root.dir>
+        <jboss.home.name>JBOSS_HOME</jboss.home.name>
+        <version.server.bom>18.0.1.Final</version.server.bom>
+        <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+        <version.jaxwx-tools-maven-plugin>1.2.3.Final</version.jaxwx-tools-maven-plugin>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-jakartaee8-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>temperature-suite-ejb</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>temperature-suite-web</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.3_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>2.0.1.Final</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                    <hostname>${env.REMOTE_SERVER_IP}</hostname>
+                    <port>9990</port>
+                    <username>${env.REMOTE_SERVER_USERNAME}</username>
+                    <password>${env.REMOTE_SERVER_PASSWORD}</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
