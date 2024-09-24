@@ -46,7 +46,7 @@
                         <webModule>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>temperature-suite-web</artifactId>
-                            <contextRoot>/temperature-suite-web</contextRoot>
+                            <contextRoot>/temperature-suite</contextRoot>
                         </webModule>
                     </modules>
                     <outputFileNameMapping>@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
