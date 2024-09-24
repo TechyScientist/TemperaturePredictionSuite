@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 @Entity
-@Table(name="temperature-suite-models")
+@Table(name="temperature_suite_models")
 @NamedQueries({
         @NamedQuery(name="Model.FindByName", query="SELECT m FROM Model m WHERE m.name = :name")
 })

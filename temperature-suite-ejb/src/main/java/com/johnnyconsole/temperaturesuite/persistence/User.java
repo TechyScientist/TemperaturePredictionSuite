@@ -3,7 +3,7 @@ package com.johnnyconsole.temperaturesuite.persistence;
 import javax.persistence.*;
 
 @Entity
-@Table(name="temperature-suite-users")
+@Table(name="temperature_suite_users")
 @NamedQueries({
         @NamedQuery(name="User.FindByUsername", query="SELECT u FROM User u WHERE u.username = :username")
 })
