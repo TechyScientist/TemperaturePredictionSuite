@@ -6,7 +6,8 @@
 
     <style>
         :root {
-            --color-primary: #1DA1F2
+            --color-primary: #1DA1F2;
+            --color-background: #CFEBFC;
         }
 
         * {
@@ -16,8 +17,8 @@
         }
 
         body {
-            margin: 20px;
-            /* background: lightsteelblue; */
+            margin: 20px 200px;
+            background: var(--color-background)
         }
 
         div#body {
@@ -50,7 +51,6 @@
             background: var(--color-primary);
             padding: 20px;
             color: white;
-            border: 2px solid white;
             border-radius: 16px;
         }
 
