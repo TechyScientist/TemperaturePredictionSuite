@@ -1,4 +1,4 @@
-package com.johnnyconsole.temperaturesuite.ejb.com.johnnyconsole.temperaturesuite.persistence;
+package com.johnnyconsole.temperaturesuite.persistence;
 
 import javax.persistence.*;
 import java.sql.Blob;
