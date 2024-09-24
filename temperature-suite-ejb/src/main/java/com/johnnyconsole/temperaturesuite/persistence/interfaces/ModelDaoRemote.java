@@ -9,6 +9,6 @@ public interface ModelDaoRemote {
 
     Model getModel(String name);
     boolean addModel(Model model);
-    boolean deleteModel(Model model, String myUsername);
+    boolean deleteModel(Model model);
 
 }
