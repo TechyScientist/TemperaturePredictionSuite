@@ -128,7 +128,7 @@
                 className = model.substring(model.indexOf("(") + 1, model.indexOf(")")),
                 date = request.getParameter("date"),
                 prediction = request.getParameter("prediction"); %>
-    <p id="success"><b><%=className%> model <%=modelName%></b> predicts the temperature on <b><%= date %></b> as: <b><%=prediction%>&deg;C</b>.</p>
+    <p id="success"><b><%=className%></b> Model <b><%=modelName%></b> predicts the temperature on <b><%= date %></b> as: <b><%=prediction%>&deg;C</b>.</p>
     <% } %>
     <div id="intro-header">
         <h2>Make a Prediction</h2>
