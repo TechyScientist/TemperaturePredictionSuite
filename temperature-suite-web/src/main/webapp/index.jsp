@@ -101,7 +101,7 @@
             }
         }
     } catch(SQLException e) {
-
+        response.sendRedirect("add-first-user.jsp");
     }
 %>
 <div id="header">
@@ -109,11 +109,14 @@
 </div>
 <div id="body">
     <%
-        if(request.getParameter("first-user").equals("added")) { %>
+        if(request.getParameter("first-user") != null) { %>
             <p id="success">The first user account was added successfully. Please log in with the information you provided.</p>
-       <% } %>
+       <% }
+       else if(request.getParameter("logout") != null) {%>
+            <p id="success">You have successfully been logged out.</p>
+    <% } %>
     <h2>Log In</h2>
-    <form action="/temperature-suite/LoginServlet" method="post">
+    <form action="LoginServlet" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" placeholder="Enter Username" required/><br/><br/>
         <label for="password">Password:</label>
