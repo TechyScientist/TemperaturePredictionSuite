@@ -73,6 +73,10 @@
             border-radius: 16px;
         }
 
+        a {
+            color: black;
+        }
+
         p {
             margin-bottom: 10px;
         }
