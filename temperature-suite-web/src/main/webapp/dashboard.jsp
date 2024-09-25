@@ -1,4 +1,4 @@
-<%@ page import="com.johnnyconsole.temperaturesuite.web.util.ApplicationSession" %>
+<%@ page import="static com.johnnyconsole.temperaturesuite.web.util.ApplicationSession.*" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -59,6 +59,10 @@
             border-radius: 16px;
         }
 
+        div#intro-header h2, div#intro-header form {
+            display: inline-block;
+        }
+
         hr {
             height: 20px;
             background-color: var(--color-primary);
@@ -87,16 +91,18 @@
 
 <body>
 <%
-    if(ApplicationSession.username != null) {
+    if(username != null) {
 %>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
-    <h2>Under Construction</h2>
-    <form action="/temperature-suite/LogoutServlet" method="post">
-        <input type="submit" value="Log Out">
-    </form>
+    <div id="intro-header">
+        <h2>Welcome, <%= name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name %>!</h2>
+        <form action="LogoutServlet" method="post">
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
 </div>
 
 <hr/>
