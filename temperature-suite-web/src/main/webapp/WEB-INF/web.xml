@@ -8,4 +8,8 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.LogoutServlet</servlet-class>
+    </servlet>
 </web-app>

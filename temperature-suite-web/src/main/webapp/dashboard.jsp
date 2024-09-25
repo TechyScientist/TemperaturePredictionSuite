@@ -93,11 +93,10 @@
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
-    <%
-        if(request.getParameter("first-user").equals("added")) { %>
-            <p id="success">The first user account was added successfully. Please log in with the information you provided.</p>
-       <% } %>
     <h2>Under Construction</h2>
+    <form action="/temperature-suite/LogoutServlet" method="post">
+        <input type="submit" value="Log Out">
+    </form>
 </div>
 
 <hr/>
