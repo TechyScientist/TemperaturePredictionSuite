@@ -111,10 +111,15 @@
     <%
         if(request.getParameter("first-user") != null) { %>
             <p id="success">The first user account was added successfully. Please log in with the information you provided.</p>
-       <% }
+    <% }
        else if(request.getParameter("logout") != null) {%>
             <p id="success">You have successfully been logged out.</p>
-    <% } %>
+    <% }
+        else if(request.getParameter("error") != null) {
+            if(request.getParameter("error").equals("unauthorized")) { %>
+                <p id="error">You must be signed in to access that page.</p>
+    <%      }
+        } %>
     <h2>Log In</h2>
     <form action="LoginServlet" method="post">
         <label for="username">Username:</label>

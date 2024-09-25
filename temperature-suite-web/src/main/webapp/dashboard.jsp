@@ -106,6 +106,6 @@
 </div>
 
 <hr/>
-<% } else response.sendRedirect("/temperature-suite"); %>
+<% } else response.sendRedirect("/temperature-suite?error=unauthorized"); %>
 </body>
 </html>
