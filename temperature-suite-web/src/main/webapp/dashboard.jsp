@@ -116,7 +116,22 @@
     <h2>Available Tools</h2>
     <p>You are currently authorized to access the following tools:</p>
     <ul>
-        <li>Under Construction</li>
+        <li>Make Prediction</li>
+        <% if(accessLevel == 1) { %>
+            <li>User Management:
+                <ul>
+                    <li>Add a User</li>
+                    <li>Modify a User</li>
+                    <li>Delete a User</li>
+                </ul>
+            </li>
+            <li>Model Management:
+                    <ul>
+                        <li>Create a New Model</li>
+                        <li>Delete an Existing Model</li>
+                    </ul>
+            </li>
+        <% } %>
     </ul>
 </div>
 
