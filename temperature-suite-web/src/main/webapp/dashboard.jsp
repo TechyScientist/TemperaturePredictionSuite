@@ -69,13 +69,16 @@
             border-radius: 16px;
         }
 
+        p {
+            margin-bottom: 10px;
+        }
+
         p#error {
             background-color: darkred;
             color: white;
             text-align: center;
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
         }
 
         p#success {
@@ -84,7 +87,14 @@
             text-align: center;
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
+        }
+
+        p:not(#error, #success) {
+            margin-left: 20px;
+        }
+
+        ul {
+            margin-left: 60px;
         }
     </style>
 </head>
@@ -103,6 +113,11 @@
             <input type="submit" value="Log Out">
         </form>
     </div>
+    <h2>Available Tools</h2>
+    <p>You are currently authorized to access the following tools:</p>
+    <ul>
+        <li>Under Construction</li>
+    </ul>
 </div>
 
 <hr/>
