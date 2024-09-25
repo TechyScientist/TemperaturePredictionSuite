@@ -12,4 +12,8 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PredictionServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.PredictionServlet</servlet-class>
+    </servlet>
 </web-app>

@@ -35,7 +35,7 @@
             margin-bottom: 10px;
         }
 
-        form {
+        form:not(div#intro-header form) {
             margin-left: 30px;
             margin-bottom: 25px;
         }
@@ -61,6 +61,10 @@
 
         div#intro-header h2, div#intro-header form {
             display: inline-block;
+        }
+
+        div#intro-header form {
+            margin-left: 30px;
         }
 
         hr {
@@ -116,7 +120,7 @@
     <h2>Available Tools</h2>
     <p>You are currently authorized to access the following tools:</p>
     <ul>
-        <li>Make Prediction</li>
+        <li><a href="make-prediction.jsp">Make Prediction</a></li>
         <% if(accessLevel == 1) { %>
             <li>User Management:
                 <ul>
