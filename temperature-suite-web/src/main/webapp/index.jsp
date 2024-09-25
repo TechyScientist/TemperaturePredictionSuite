@@ -1,3 +1,8 @@
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -23,6 +28,10 @@
 
         div#body {
             margin: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
         }
 
         h3 {
@@ -81,11 +90,36 @@
 </head>
 
 <body>
+<%
+    try (Connection conn = Database.connect()){
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(username) FROM temperature_suite_users WHERE accessLevel = 1;");
+        stmt.execute();
+        ResultSet set = stmt.getResultSet();
+        if(set.next()) {
+            if(set.getInt(1) == 0) {
+                response.sendRedirect("add-first-user.jsp");
+            }
+        }
+    } catch(SQLException e) {
+
+    }
+%>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
-    <h2>Under Construction</h2>
+    <%
+        if(request.getParameter("first-user").equals("added")) { %>
+            <p id="success">The first user account was added successfully. Please log in with the information you provided.</p>
+       <% } %>
+    <h2>Log In</h2>
+    <form action="/temperature-suite/LoginServlet" method="post">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Enter Username" required/><br/><br/>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Enter Password" required/><br/><br/>
+        <input type="submit" name="login-submit" id="login-submit" value="Log In"/>
+    </form>
 </div>
 
 <hr/>
