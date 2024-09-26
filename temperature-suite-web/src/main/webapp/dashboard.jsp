@@ -1,4 +1,11 @@
-<%@ page import="static com.johnnyconsole.temperaturesuite.web.util.ApplicationSession.*" %>
+<%@ page import="javax.ejb.EJB" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.ejb.impl.TemperatureStateful" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote" %>
+<%@ page import="javax.naming.InitialContext" %>
+<%@ page import="javax.naming.NamingException" %>
+<%@ page import="javax.naming.Context" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.web.util.ContextUtil" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -108,15 +115,20 @@
 </head>
 
 <body>
+<%-- Do JNDI lookup to get stateful bean session: direct injection not supported in JSP's. --%>
+<% try {
+   TemperatureStatefulRemote stateful = ContextUtil.getInitialContext().doLookup(
+           "ejb:temperature-suite-ear/temperature-suite-ejb/TemperatureStateful!com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote?stateful"); %>
 <%
-    if(username != null) {
+    if(stateful.isLoggedIn()) {
 %>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
     <div id="intro-header">
-        <h2>Welcome, <%= name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name %>!</h2>
+        <% String name = stateful.loggedInName(); %>
+        <h2>Welcome, <%= name != null ? (name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name) : "" %>!</h2>
         <form action="LogoutServlet" method="post">
             <input type="submit" value="Log Out">
         </form>
@@ -125,7 +137,7 @@
     <p>You are currently authorized to access the following tools:</p>
     <ul>
         <li><a href="make-prediction.jsp">Make Prediction</a></li>
-        <% if(accessLevel == 1) { %>
+        <% if(stateful.loggedInAccessLevel() == 1) { %>
             <li>User Management:
                 <ul>
                     <li>Add a User</li>
@@ -144,6 +156,9 @@
 </div>
 
 <hr/>
-<% } else response.sendRedirect("/temperature-suite?error=unauthorized"); %>
+<% } else response.sendRedirect("/temperature-suite?error=unauthorized");
+} catch(NamingException ex) { %>
+    <p class="error">Naming Exception</p>
+<% } %>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.johnnyconsole.temperaturesuite.web.servlet;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal;
+import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote;
 import com.johnnyconsole.temperaturesuite.persistence.User;
 import com.johnnyconsole.temperaturesuite.persistence.interfaces.UserDaoLocal;
 import com.johnnyconsole.temperaturesuite.web.util.ApplicationSession;
@@ -18,6 +20,9 @@ public class LoginServlet extends HttpServlet {
     @EJB
     UserDaoLocal userDao;
 
+    @EJB
+    TemperatureStatefulRemote stateful;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws IOException {
@@ -27,7 +32,8 @@ public class LoginServlet extends HttpServlet {
                         password = request.getParameter("password");
                 if (userDao.verifyUser(username, password)) {
                     User user = userDao.getUser(username);
-                    ApplicationSession.set(username, user.getName(), user.getAccessLevel());
+                    stateful.logIn(user.getUsername(), user.getName(), user.getAccessLevel());
+                    //ApplicationSession.set(username, user.getName(), user.getAccessLevel());
                     response.sendRedirect("/temperature-suite/dashboard.jsp");
                 }
             } else {
@@ -35,6 +41,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
         catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect("/temperature-suite?error=login");
         }
     }
