@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("dashboard.jsp");
                 }
                 else {
-                    response.sendRedirect("/temperaturesuite?error=credentials");
+                    response.sendRedirect("/temperature-suite?error=credentials");
                 }
             } else {
                 response.sendRedirect("/temperature-suite");
