@@ -1,7 +1,5 @@
 package com.johnnyconsole.temperaturesuite.ejb.interfaces;
 
-import com.johnnyconsole.temperaturesuite.persistence.User;
-
 import javax.ejb.Local;
 
 @Local

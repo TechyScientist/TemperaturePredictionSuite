@@ -1,11 +1,5 @@
-<%@ page import="javax.ejb.EJB" %>
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.ejb.impl.TemperatureStateful" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote" %>
-<%@ page import="javax.naming.InitialContext" %>
-<%@ page import="javax.naming.NamingException" %>
-<%@ page import="javax.naming.Context" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.web.util.ContextUtil" %>
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -117,8 +111,7 @@
 <body>
 <%-- Do JNDI lookup to get stateful bean session: direct injection not supported in JSP's. --%>
 <% try {
-   TemperatureStatefulRemote stateful = ContextUtil.getInitialContext().doLookup(
-           "ejb:temperature-suite-ear/temperature-suite-ejb/TemperatureStateful!com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote?stateful"); %>
+   TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session"); %>
 <%
     if(stateful.isLoggedIn()) {
 %>
@@ -157,8 +150,8 @@
 
 <hr/>
 <% } else response.sendRedirect("/temperature-suite?error=unauthorized");
-} catch(NamingException ex) { %>
-    <p class="error">Naming Exception</p>
-<% } %>
+} catch(NullPointerException ex) {
+    response.sendRedirect("/temperature-suite?error=unauthorized");
+} %>
 </body>
 </html>

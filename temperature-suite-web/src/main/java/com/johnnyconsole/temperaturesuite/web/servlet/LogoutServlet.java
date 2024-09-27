@@ -1,7 +1,6 @@
 package com.johnnyconsole.temperaturesuite.web.servlet;
 
 import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal;
-import com.johnnyconsole.temperaturesuite.web.util.ApplicationSession;
 
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +20,6 @@ public class LogoutServlet extends HttpServlet {
     throws IOException {
         try {
             stateful.logOut();
-            //ApplicationSession.unset();
             response.sendRedirect("/temperature-suite/?logout=success");
         }
         catch (Exception e) {
