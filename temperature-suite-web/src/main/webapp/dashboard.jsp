@@ -90,15 +90,8 @@
             padding: 10px;
         }
 
-        p#success {
-            background-color: darkgreen;
-            color: white;
-            text-align: center;
-            width: 100%;
-            padding: 10px;
-        }
 
-        p:not(#error, #success) {
+        p:not(#error) {
             margin-left: 20px;
         }
 
@@ -125,6 +118,9 @@
             <input type="submit" value="Log Out">
         </form>
     </div>
+    <% if(request.getParameter("error") != null && request.getParameter("error").equals("delete-user")) { %>
+        <p id="error">There was an error getting the user list for deleting.</p>
+    <% } %>
     <h2>Available Tools</h2>
     <p>You are currently authorized to access the following tools:</p>
     <ul>
@@ -135,7 +131,7 @@
                 <ul>
                     <li><a href="add-user.jsp">Add a User</a></li>
                     <li>Modify a User's Profile</li>
-                    <li>Delete a User</li>
+                    <li><a href="delete-user.jsp">Delete a User</a></li>
                 </ul>
             </li>
             <li>Model Management:
