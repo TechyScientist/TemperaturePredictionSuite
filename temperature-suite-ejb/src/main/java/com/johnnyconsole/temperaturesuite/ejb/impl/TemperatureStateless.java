@@ -2,7 +2,6 @@ package com.johnnyconsole.temperaturesuite.ejb.impl;
 
 
 import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatelessLocal;
-import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatelessRemote;
 import com.johnnyconsole.temperaturesuite.persistence.Model;
 import com.johnnyconsole.temperaturesuite.persistence.interfaces.ModelDaoLocal;
 import weka.classifiers.trees.REPTree;
@@ -18,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Stateless
-public class TemperatureStateless
-        implements TemperatureStatelessLocal, TemperatureStatelessRemote {
+public class TemperatureStateless implements TemperatureStatelessLocal {
 
     @EJB
     ModelDaoLocal modelBean;

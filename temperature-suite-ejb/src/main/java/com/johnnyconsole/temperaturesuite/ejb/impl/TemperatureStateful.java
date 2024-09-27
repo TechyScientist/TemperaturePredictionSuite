@@ -1,18 +1,14 @@
 package com.johnnyconsole.temperaturesuite.ejb.impl;
 
 import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal;
-import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulRemote;
-import com.johnnyconsole.temperaturesuite.persistence.User;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 @Stateful
-@LocalBean
 @SessionScoped
-public class TemperatureStateful implements TemperatureStatefulLocal, TemperatureStatefulRemote, Serializable {
+public class TemperatureStateful implements TemperatureStatefulLocal, Serializable {
 
     private String username, name;
     private int accessLevel = -1;
