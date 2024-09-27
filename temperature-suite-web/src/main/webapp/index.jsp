@@ -119,7 +119,10 @@
             if(request.getParameter("error").equals("unauthorized")) { %>
                 <p id="error">You must be signed in to access that page.</p>
     <%      }
-        } %>
+            else if(request.getParameter("error").equals("credentials")) { %>
+                <p id="error">The username or password you entered is incorrect.</p>
+        <% }
+        }%>
     <h2>Log In</h2>
     <form action="LoginServlet" method="post">
         <label for="username">Username:</label>

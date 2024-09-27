@@ -36,13 +36,15 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("session", stateful);
                     response.sendRedirect("dashboard.jsp");
                 }
+                else {
+                    response.sendRedirect("/temperaturesuite?error=credentials");
+                }
             } else {
                 response.sendRedirect("/temperature-suite");
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("/temperature-suite?error=login");
+            response.sendRedirect("/temperature-suite?error=credentials");
         }
     }
 }
