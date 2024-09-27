@@ -8,6 +8,7 @@ import javax.ejb.Local;
 public interface UserDaoLocal {
 
     User getUser(String username);
+    boolean userExists(String username);
     boolean addUser(User user);
     boolean removeUser(User user, String myUsername);
     boolean verifyUser(String username, String passwordPlainText);

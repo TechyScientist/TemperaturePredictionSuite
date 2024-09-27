@@ -29,6 +29,13 @@ public class UserDaoImpl implements UserDaoLocal {
     }
 
     @Override
+    public boolean userExists(String username) {
+        Query query = manager.createNamedQuery("User.FindByUsername");
+        query.setParameter("username", username);
+        return query.getSingleResult() != null;
+    }
+
+    @Override
     public boolean addUser(User user) {
         try {
             manager.persist(user);
