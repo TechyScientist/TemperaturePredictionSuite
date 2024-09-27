@@ -1,5 +1,4 @@
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
-
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -74,10 +73,6 @@
             border-radius: 16px;
         }
 
-        a {
-            color: black;
-        }
-
         p {
             margin-bottom: 10px;
         }
@@ -110,41 +105,37 @@
 
 <body>
 <%
-   TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
-
-    if(stateful != null && stateful.isLoggedIn()) {
+TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
+    if(stateful != null && stateful.isLoggedIn() && stateful.loggedInAccessLevel() == 1) {
 %>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
+    <% if(request.getParameter("error") != null) {
+        if(request.getParameter("error").equals("prediction")) { %>
+    <p id="error">There was an error making the prediction.</p>
+
+    <%  }
+    }
+    else if(request.getParameter("prediction") != null) {
+        String model = request.getParameter("model"),
+                modelName = model.substring(0, model.indexOf(" ")),
+                className = model.substring(model.indexOf("(") + 1, model.indexOf(")")),
+                date = request.getParameter("date"),
+                prediction = request.getParameter("prediction"); %>
+    <p id="success"><b><%=className%></b> Model <b><%=modelName%></b> predicts the temperature on <b><%= date %></b> as: <b><%=prediction%>&deg;C</b>.</p>
+    <% } %>
     <div id="intro-header">
-        <% String name = stateful.loggedInName(); %>
-        <h2>Welcome, <%= name != null ? (name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name) : "" %>!</h2>
-        <form action="LogoutServlet" method="post">
-            <input type="submit" value="Log Out">
+        <h2>User Management: Add a User</h2>
+        <form action="dashboard.jsp" method="post">
+            <input type="submit" value="Return to Dashboard">
         </form>
     </div>
-    <h2>Available Tools</h2>
-    <p>You are currently authorized to access the following tools:</p>
-    <ul>
-        <li><a href="make-prediction.jsp">Make Prediction</a></li>
-        <% if(stateful.loggedInAccessLevel() == 1) { %>
-            <li>User Management:
-                <ul>
-                    <li><a href="add-user.jsp">Add a User</a></li>
-                    <li>Modify a User</li>
-                    <li>Delete a User</li>
-                </ul>
-            </li>
-            <li>Model Management:
-                    <ul>
-                        <li>Create a New Model</li>
-                        <li>Delete an Existing Model</li>
-                    </ul>
-            </li>
-        <% } %>
-    </ul>
+    <p>Fill in the information below to add a new user. All fields are required.</p>
+    <form action="AddUserServlet" method="post">
+
+    </form>
 </div>
 
 <hr/>
