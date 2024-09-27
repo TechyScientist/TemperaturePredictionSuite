@@ -111,6 +111,7 @@
 <body>
 <%
 TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
+if(stateful != null) {
     if(stateful.isLoggedIn()) {
 %>
 <div id="header">
@@ -208,6 +209,9 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
 </div>
 
 <hr/>
-<% } else response.sendRedirect("/temperature-suite?error=unauthorized"); %>
+<% } else response.sendRedirect("/temperature-suite?error=unauthorized");
+} else {
+    response.sendRedirect("/temperature-suite?error=unauthorized");
+}%>
 </body>
 </html>
