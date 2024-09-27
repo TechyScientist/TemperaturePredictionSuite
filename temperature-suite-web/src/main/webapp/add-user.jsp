@@ -112,10 +112,17 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
-    <% if(request.getParameter("error") != null) { %>
-
-    <%  } %>
-
+    <% if(request.getParameter("error") != null) {
+        if(request.getParameter("error").equals("user-add")) { %>
+    <p id="error">There was an error adding the user.</p>
+    <%  }
+        else if(request.getParameter("error").equals("user-exists")) { %>
+            <p id="error">The username you entered already exists. Please choose a different username and try again.</p>
+    <% }
+    }
+    else if(request.getParameter("user") != null && request.getParameter("user").equals("added")) { %>
+        <p id="success">The user has been added successfully.</p>
+    <% } %>
     <div id="intro-header">
         <h2>User Management: Add a User</h2>
         <form action="dashboard.jsp" method="post">

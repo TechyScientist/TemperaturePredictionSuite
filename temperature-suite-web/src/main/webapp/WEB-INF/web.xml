@@ -16,4 +16,8 @@
         <servlet-name>PredictionServlet</servlet-name>
         <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.PredictionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddUserServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.temperaturesuite.web.servlet.AddUserServlet</servlet-class>
+    </servlet>
 </web-app>

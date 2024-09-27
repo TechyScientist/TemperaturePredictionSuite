@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDaoLocal {
     public boolean userExists(String username) {
         Query query = manager.createNamedQuery("User.FindByUsername");
         query.setParameter("username", username);
-        return query.getSingleResult() != null;
+        return !query.getResultList().isEmpty();
     }
 
     @Override

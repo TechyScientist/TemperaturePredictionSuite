@@ -134,7 +134,7 @@
             <li>User Management:
                 <ul>
                     <li><a href="add-user.jsp">Add a User</a></li>
-                    <li>Modify a User</li>
+                    <li>Modify a User's Profile</li>
                     <li>Delete a User</li>
                 </ul>
             </li>
