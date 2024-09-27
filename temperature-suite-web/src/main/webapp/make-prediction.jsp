@@ -201,7 +201,7 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
                 <td><input type="number" name="year" id="year" placeholder="Enter Year" required/></td>
             </tr>
             <tr>
-                <td rowspan="4"><center><input type="submit" name="predict-submit" value="Make Prediction"/></center></td>
+                <td rowspan="4"><input type="submit" name="predict-submit" value="Make Prediction"/></td>
             </tr>
         </table>
     </form>
