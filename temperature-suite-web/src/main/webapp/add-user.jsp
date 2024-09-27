@@ -112,20 +112,10 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
-    <% if(request.getParameter("error") != null) {
-        if(request.getParameter("error").equals("prediction")) { %>
-    <p id="error">There was an error making the prediction.</p>
+    <% if(request.getParameter("error") != null) { %>
 
-    <%  }
-    }
-    else if(request.getParameter("prediction") != null) {
-        String model = request.getParameter("model"),
-                modelName = model.substring(0, model.indexOf(" ")),
-                className = model.substring(model.indexOf("(") + 1, model.indexOf(")")),
-                date = request.getParameter("date"),
-                prediction = request.getParameter("prediction"); %>
-    <p id="success"><b><%=className%></b> Model <b><%=modelName%></b> predicts the temperature on <b><%= date %></b> as: <b><%=prediction%>&deg;C</b>.</p>
-    <% } %>
+    <%  } %>
+
     <div id="intro-header">
         <h2>User Management: Add a User</h2>
         <form action="dashboard.jsp" method="post">
@@ -134,7 +124,20 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
     </div>
     <p>Fill in the information below to add a new user. All fields are required.</p>
     <form action="AddUserServlet" method="post">
-
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" id="name" placeholder="Full Name" required/><br/><br/>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="username" required/><br/><br/>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Password" required/><br/><br/>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Passqord" required/><br/><br/>
+        <label for="access-level">Access Level:</label>
+        <select name="access-level" id="access-level">
+            <option value="0">0: Standard User</option>
+            <option value="1">1: Administrative User</option>
+        </select><br/><br/>
+        <input type="submit" name="add-user-submit" id="add-user-submit" value="Add User"/>
     </form>
 </div>
 
