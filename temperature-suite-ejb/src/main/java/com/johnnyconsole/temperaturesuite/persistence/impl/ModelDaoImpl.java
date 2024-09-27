@@ -2,7 +2,6 @@ package com.johnnyconsole.temperaturesuite.persistence.impl;
 
 import com.johnnyconsole.temperaturesuite.persistence.Model;
 import com.johnnyconsole.temperaturesuite.persistence.interfaces.ModelDaoLocal;
-import com.johnnyconsole.temperaturesuite.persistence.interfaces.ModelDaoRemote;
 
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Alternative;
@@ -12,7 +11,7 @@ import javax.persistence.Query;
 
 @Stateful
 @Alternative
-public class ModelDaoImpl implements ModelDaoLocal, ModelDaoRemote {
+public class ModelDaoImpl implements ModelDaoLocal {
 
     @PersistenceContext(unitName="model")
     private EntityManager manager;

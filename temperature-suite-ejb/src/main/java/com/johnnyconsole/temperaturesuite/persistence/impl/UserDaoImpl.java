@@ -3,7 +3,6 @@ package com.johnnyconsole.temperaturesuite.persistence.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.johnnyconsole.temperaturesuite.persistence.User;
 import com.johnnyconsole.temperaturesuite.persistence.interfaces.UserDaoLocal;
-import com.johnnyconsole.temperaturesuite.persistence.interfaces.UserDaoRemote;
 
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Alternative;
@@ -13,7 +12,7 @@ import javax.persistence.Query;
 
 @Stateful
 @Alternative
-public class UserDaoImpl implements UserDaoLocal, UserDaoRemote {
+public class UserDaoImpl implements UserDaoLocal {
 
     @PersistenceContext(unitName="user")
     private EntityManager manager;
