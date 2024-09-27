@@ -1,9 +1,9 @@
-<%@ page import="static com.johnnyconsole.temperaturesuite.web.util.ApplicationSession.*" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -110,7 +110,8 @@
 
 <body>
 <%
-    if(username != null) {
+TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
+    if(stateful.isLoggedIn()) {
 %>
 <div id="header">
     <h1>Temperature Suite Web App</h1>

@@ -39,10 +39,4 @@ public class TemperatureStateful implements TemperatureStatefulLocal, Serializab
         this.name = name;
         this.accessLevel = accessLevel;
     }
-
-    @Override
-    public void logOut() {
-        username = name = null;
-        accessLevel =  -1;
-    }
 }

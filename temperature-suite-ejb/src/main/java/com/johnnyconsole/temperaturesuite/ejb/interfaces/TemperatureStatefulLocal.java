@@ -10,6 +10,5 @@ public interface TemperatureStatefulLocal {
     String loggedInName();
     int loggedInAccessLevel();
     void logIn(String username, String name, int accessLevel);
-    void logOut();
 
 }
