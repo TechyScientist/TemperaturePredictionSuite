@@ -91,10 +91,6 @@
         }
 
 
-        p:not(#error) {
-            margin-left: 20px;
-        }
-
         ul {
             margin-left: 60px;
         }
@@ -112,38 +108,27 @@
 </div>
 <div id="body">
     <div id="intro-header">
-        <% String name = stateful.loggedInName(); %>
-        <h2>Welcome, <%= name != null ? (name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name) : "" %>!</h2>
-        <form action="LogoutServlet" method="post">
-            <input type="submit" value="Log Out">
+        <% String username = stateful.loggedInUsername(),
+                name = stateful.loggedInName(),
+                accessLevel = stateful.loggedInAccessLevel() == 0 ? "Standard User" : "Administrative User";%>
+        <h2>My Profile</h2>
+        <form action="dashboard.jsp" method="post">
+            <input type="submit" value="Return to Dashboard">
         </form>
     </div>
-    <% if(request.getParameter("error") != null && request.getParameter("error").equals("delete-user")) { %>
-        <p id="error">There was an error getting the user list for deleting.</p>
-    <% } %>
-    <h2>Available Tools</h2>
-    <p>You are currently authorized to access the following tools:</p>
-    <ul>
-        <li><a href="make-prediction.jsp">Make Prediction</a></li>
-        <li><a href="profile.jsp">My Profile</a></li>
-        <% if(stateful.loggedInAccessLevel() == 1) { %>
-            <li>User Management:
-                <ul>
-                    <li><a href="add-user.jsp">Add a User</a></li>
-                    <li>Modify a User's Profile</li>
-                    <li><a href="delete-user.jsp">Delete a User</a></li>
-                </ul>
-            </li>
-            <li>Model Management:
-                    <ul>
-                        <li>Create a New Model</li>
-                        <li>Delete an Existing Model</li>
-                    </ul>
-            </li>
-        <% } %>
-    </ul>
-</div>
-
+    <p>Your details are listed below. Modify the text fields to change values. Note: you are unable to change your username or access level.</p>
+    <form action="ProfileServlet" method="post">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" disabled value="<%= username %>"/><br/><br/>
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" id="name" value="<%= name %>" required/><br/><br/>
+        <label for="password">Change Password:</label>
+        <input type="password" name="password" id="password" placeholder="New Password"/><br/><br/>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm New Password"/><br/><br/>
+        <label for="access-level-dont-use">Access Level:</label>
+        <input type="text" id="access-level-dont-use" disabled value="<%= accessLevel %>"/>
+    </form>
 <hr/>
 <% } else response.sendRedirect("/temperature-suite?error=unauthorized"); %>
 </body>
