@@ -137,7 +137,8 @@
             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm New Password" disabled/><br/><br/>
         </div>
         <label for="access-level-dont-use">Access Level:</label>
-        <input type="text" id="access-level-dont-use" disabled value="<%= accessLevel %>"/>
+        <input type="text" id="access-level-dont-use" disabled value="<%= accessLevel %>"/><br/><br/>
+        <input type="submit" name="change-profile-submit" id="change-profile-submit" value="Save Changes"/>
     </form>
     <script defer>
         div_password = document.getElementById("div-password");
