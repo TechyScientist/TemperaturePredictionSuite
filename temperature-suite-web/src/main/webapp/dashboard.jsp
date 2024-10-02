@@ -131,7 +131,7 @@
                 <ul>
                     <li><a href="add-user.jsp">Add a User</a></li>
                     <li>Modify a User's Profile</li>
-                    <li><a href="delete-user.jsp">Delete a User</a></li>
+                    <li><a href="GetDeletableUsersServlet?except=<%=stateful.loggedInUsername()%>">Delete a User</a></li>
                 </ul>
             </li>
             <li>Model Management:

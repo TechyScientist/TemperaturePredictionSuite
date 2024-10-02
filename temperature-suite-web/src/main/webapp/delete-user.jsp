@@ -3,6 +3,8 @@
 <%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.persistence.User" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -135,25 +137,19 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
         <label for="username">User to Delete:</label>
         <select name="username" id="username" required>
             <%
-                try(Connection conn = Database.connect()) {
-                    PreparedStatement stmt = conn.prepareStatement("SELECT username, name, accessLevel FROM temperature_suite_users WHERE username != ?;");
-                    stmt.setString(1, stateful.loggedInUsername());
-                    ResultSet set = stmt.executeQuery();
-                    int i = 0;
-                    while(set.next()) {
-                        i++;
-                        String username = set.getString("username"),
-                                name = set.getString("name"),
-                                type = set.getInt("accessLevel") == 0 ? "Standard User" : "Administrative User"; %>
-                        <option value="<%= username %>"><%= username %>: <%= name %> (<%= type %>)</option>
-                 <% }
-                    if(i == 0) { %>
+                List userList = (List) session.getAttribute("deletable-users");
+                    if(userList.isEmpty()) { %>
                         <option value="">No Users Found</option>
                     <% }
-                } catch(Exception e) {
-                    response.sendRedirect("/dashboard.jsp?error=delete-user");
-                }
-            %>
+                    else {
+                        for (int i = 0; i < userList.size(); i++) {
+                            User user = (User) (userList.get(i));
+                            String username = user.getUsername(),
+                                    name = user.getName(),
+                                    type = user.getAccessLevel() == 0 ? "Standard User" : "Administrative User"; %>
+                        <option value="<%= username %>"><%= username %>: <%= name %> (<%= type %>)</option>
+                <%        }
+                    } %>
         </select>
         <input type="submit" name="delete-user-submit" id="delete-user-submit" value="Delete User"/>
     </form>
