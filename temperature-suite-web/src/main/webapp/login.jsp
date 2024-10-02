@@ -1,8 +1,3 @@
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
-<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -88,22 +83,7 @@
         }
     </style>
 </head>
-
 <body>
-<%
-    try (Connection conn = Database.connect()){
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(username) FROM temperature_suite_users WHERE accessLevel = 1;");
-        stmt.execute();
-        ResultSet set = stmt.getResultSet();
-        if(set.next()) {
-            if(set.getInt(1) == 0) {
-                response.sendRedirect("add-first-user.jsp");
-            }
-        }
-    } catch(SQLException e) {
-        response.sendRedirect("add-first-user.jsp");
-    }
-%>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
