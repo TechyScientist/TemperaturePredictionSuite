@@ -1,5 +1,4 @@
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
-
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -74,10 +73,6 @@
             border-radius: 16px;
         }
 
-        a {
-            color: black;
-        }
-
         p {
             margin-bottom: 10px;
         }
@@ -90,8 +85,15 @@
             padding: 10px;
         }
 
+        p#success {
+            background-color: darkgreen;
+            color: white;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+        }
 
-        p:not(#error) {
+        p:not(#error, #success) {
             margin-left: 20px;
         }
 
@@ -103,45 +105,42 @@
 
 <body>
 <%
-   TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
-
-    if(stateful != null && stateful.isLoggedIn()) {
+TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
+    if(stateful != null && stateful.isLoggedIn() && stateful.loggedInAccessLevel() == 1) {
 %>
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
 <div id="body">
+    <% if(request.getParameter("error") != null) {
+        if(request.getParameter("error").equals("create-model")) { %>
+    <p id="error">There was an error creating the model.</p>
+    <%  }
+        else if(request.getParameter("error").equals("model-exists")) { %>
+            <p id="error">The model name you entered already exists. Please choose a different name and try again.</p>
+    <% }
+    }
+    else if(request.getParameter("model") != null && request.getParameter("created").equals("added")) { %>
+        <p id="success">The model has been created successfully.</p>
+    <% } %>
     <div id="intro-header">
-        <% String name = stateful.loggedInName(); %>
-        <h2>Welcome, <%= name != null ? (name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name) : "" %>!</h2>
-        <form action="LogoutServlet" method="post">
-            <input type="submit" value="Log Out">
+        <h2>Model Management: Create a Model</h2>
+        <form action="dashboard.jsp" method="post">
+            <input type="submit" value="Return to Dashboard">
         </form>
     </div>
-    <% if(request.getParameter("error") != null && request.getParameter("error").equals("delete-user")) { %>
-        <p id="error">There was an error getting the user list for deleting.</p>
-    <% } %>
-    <h2>Available Tools</h2>
-    <p>You are currently authorized to access the following tools:</p>
-    <ul>
-        <li><a href="GetModelListServlet?dest=make-prediction.jsp">Make Prediction</a></li>
-        <li><a href="profile.jsp">My Profile</a></li>
-        <% if(stateful.loggedInAccessLevel() == 1) { %>
-            <li>User Management:
-                <ul>
-                    <li><a href="add-user.jsp">Add a User</a></li>
-                    <li>Modify a User's Profile</li>
-                    <li><a href="GetDeletableUsersServlet">Delete a User</a></li>
-                </ul>
-            </li>
-            <li>Model Management:
-                    <ul>
-                        <li><b>Unfinished</b> <a href="create-model.jsp">Create a New Model</a></li>
-                        <li><b>Unfinished</b> <a href="GetModelListServlet?dest=delete-model.jsp">Delete an Existing Model</a></li>
-                    </ul>
-            </li>
-        <% } %>
-    </ul>
+    <p>Fill in the information below to create a new model. All fields are required.</p>
+    <form action="CreateModelServlet" method="post">
+        <label for="name">Model Name:</label>
+        <input type="text" name="name" id="name" placeholder="Model Name" required/><br/><br/>
+        <label for="class">Model Class:</label>
+        <select name="class" id="class">
+            <option value="REPTree">REPTree Classifier</option>
+        </select><br/><br/>
+        <label for="data">Training Data (*.csv):</label>
+        <input type="file" name="data" id="data" accept="text/csv" placeholder="Training Data (*.csv)" required/><br/><br/>
+        <input type="submit" name="add-user-submit" id="create-model-submit" value="Create Model"/>
+    </form>
 </div>
 
 <hr/>
