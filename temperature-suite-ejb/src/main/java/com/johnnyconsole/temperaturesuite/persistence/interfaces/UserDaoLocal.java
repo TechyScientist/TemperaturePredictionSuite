@@ -11,7 +11,7 @@ public interface UserDaoLocal {
     User getUser(String username);
     boolean userExists(String username);
     long userCount();
-    List<User> getUsersExcept(String username);
+    List getUsersExcept(String username);
     boolean addUser(User user);
     boolean removeUser(User user, String myUsername);
     boolean verifyUser(String username, String passwordPlainText);

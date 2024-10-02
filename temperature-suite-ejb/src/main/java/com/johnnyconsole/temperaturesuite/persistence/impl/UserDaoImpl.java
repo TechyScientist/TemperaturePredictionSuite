@@ -40,10 +40,10 @@ public class UserDaoImpl implements UserDaoLocal {
     }
 
     @Override
-    public List<User> getUsersExcept(String username) {
+    public List getUsersExcept(String username) {
         Query query = manager.createNamedQuery("User.FindAllExcept");
         query.setParameter("username", username);
-        return (List<User>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
