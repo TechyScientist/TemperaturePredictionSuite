@@ -33,6 +33,8 @@ public class DeleteUserServlet extends HttpServlet {
                         response.sendRedirect("/temperature-suite/delete-user.jsp");
                     User user = userDao.getUser(username);
                     userDao.removeUser(user, stateful.loggedInUsername());
+                    session.setAttribute("deletable-users", userDao.getUsersExcept(stateful.loggedInUsername()));
+                    response.sendRedirect("delete-user.jsp");
                     response.sendRedirect("/temperature-suite/delete-user.jsp?user=deleted");
                 } else {
                     response.sendRedirect("/temperature-suite?error=unauthorized");
