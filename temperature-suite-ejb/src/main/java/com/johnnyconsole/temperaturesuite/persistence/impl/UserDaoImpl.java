@@ -9,6 +9,7 @@ import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 @Stateful
 @Alternative
@@ -26,6 +27,23 @@ public class UserDaoImpl implements UserDaoLocal {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public long userCount() {
+        try {
+            Query query = manager.createNamedQuery("User.FindCount");
+            return (long) query.getSingleResult();
+        } catch(Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public List<User> getUsersExcept(String username) {
+        Query query = manager.createNamedQuery("User.FindAllExcept");
+        query.setParameter("username", username);
+        return (List<User>) query.getResultList();
     }
 
     @Override
