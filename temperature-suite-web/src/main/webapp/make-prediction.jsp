@@ -4,6 +4,8 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.persistence.Model" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -146,26 +148,19 @@ if(stateful != null) {
                 <td colspan="3">
                     <select name="model" id="model">
                         <%
-                            try(Connection conn = Database.connect()) {
-                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM temperature_suite_models;");
-                                stmt.execute();
-                                ResultSet set = stmt.getResultSet();
-                                int count = 0;
-                                while(set.next()) {
-                                    count++;
-                                    String modelClass = set.getString("className");
+                            List models = (List) session.getAttribute("models");
+                            if(models.isEmpty()) { %>
+                                <option value="">No Models Found</option>
+                        <% }
+                            else {
+                                for(int i = 0; i < models.size(); i++) {
+                                    Model model = (Model)(models.get(i));
+                                    String modelClass = model.getClassName();
                                     modelClass = modelClass.substring(modelClass.lastIndexOf(".") + 1);
-                                    String value = set.getString("name") + " (" + modelClass + ")"; %>
+                                    String value = model.getName() + " (" + modelClass + ")"; %>
                                     <option value='<%= value %>'><%=value%></option>
                         <%      }
-                                if(count == 0) { %>
-                                    <option value="">No Models Found</option>
-                             <% }
-                            } catch(SQLException e) { %>
-                                <p id="error">Error</p>
-                        <%
-                            }
-                            %>
+                            } %>
                     </select>
                 </td>
             </tr>
