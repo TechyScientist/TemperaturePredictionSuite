@@ -1,10 +1,6 @@
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.persistence.User" %>
+<%@ page import="com.johnnyconsole.temperaturesuite.persistence.Model" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -119,39 +115,39 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
 </div>
 <div id="body">
     <% if(request.getParameter("error") != null) {
-        if(request.getParameter("error").equals("user-delete")) { %>
-    <p id="error">There was an error deleting the user.</p>
+        if(request.getParameter("error").equals("model-delete")) { %>
+    <p id="error">There was an error deleting the model.</p>
     <%  }
     }
-    else if(request.getParameter("user") != null && request.getParameter("user").equals("deleted")) { %>
-        <p id="success">The user has been deleted successfully.</p>
+    else if(request.getParameter("model") != null && request.getParameter("model").equals("deleted")) { %>
+        <p id="success">The model has been deleted successfully.</p>
     <% } %>
     <div id="intro-header">
-        <h2>User Management: Delete a User</h2>
+        <h2>Model Management: Delete a Model</h2>
         <form action="dashboard.jsp" method="post">
             <input type="submit" value="Return to Dashboard">
         </form>
     </div>
-    <p>Select the user to delete from the options below. You cannot delete your own profile.</p>
-    <form action="DeleteUserServlet" method="post">
-        <label for="username">User to Delete:</label>
-        <select name="username" id="username" required>
+    <p>Select the Model to delete from the options below.</p>
+    <form action="DeleteModelServlet" method="post">
+        <label for="model">Model to Delete:</label>
+        <select name="model" id="model">
             <%
-                List userList = (List) session.getAttribute("deletable-users");
-                    if(userList.isEmpty()) { %>
-                        <option value="">No Users Found</option>
-                    <% }
-                    else {
-                        for (int i = 0; i < userList.size(); i++) {
-                            User user = (User) (userList.get(i));
-                            String username = user.getUsername(),
-                                    name = user.getName(),
-                                    type = user.getAccessLevel() == 0 ? "Standard User" : "Administrative User"; %>
-                        <option value="<%= username %>"><%= username %>: <%= name %> (<%= type %>)</option>
-                <%        }
-                    } %>
-        </select>
-        <input type="submit" name="delete-user-submit" id="delete-user-submit" value="Delete User"/>
+                List models = (List) session.getAttribute("models");
+                if(models.isEmpty()) { %>
+            <option value="">No Models Found</option>
+            <% }
+            else {
+                for(int i = 0; i < models.size(); i++) {
+                    Model model = (Model)(models.get(i));
+                    String modelClass = model.getClassName();
+                    modelClass = modelClass.substring(modelClass.lastIndexOf(".") + 1);
+                    String value = model.getName() + " (" + modelClass + ")"; %>
+            <option value='<%= value %>'><%=value%></option>
+            <%      }
+            } %>
+        </select><br/><br/>
+        <input type="submit" name="delete-model-submit" id="delete-model-submit" value="Delete Model"/>
     </form>
 </div>
 

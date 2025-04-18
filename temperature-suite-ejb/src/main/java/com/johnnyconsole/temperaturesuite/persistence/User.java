@@ -5,7 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="temperature_suite_users")
 @NamedQueries({
-        @NamedQuery(name="User.FindByUsername", query="SELECT u FROM User u WHERE u.username = :username")
+        @NamedQuery(name="User.FindByUsername", query="SELECT u FROM User u WHERE u.username = :username"),
+        @NamedQuery(name="User.FindCount", query="SELECT COUNT(u) FROM User u"),
+        @NamedQuery(name="User.FindAllExcept", query="SELECT u FROM User u WHERE u.username != :username")
 })
 public class User {
 

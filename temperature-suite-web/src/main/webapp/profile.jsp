@@ -45,12 +45,17 @@
             margin-right: 10px;
         }
 
-        input, select {
+        input:not(input[type="checkbox"]), select {
             padding: 5px
         }
 
         input[type="text"], select {
             margin-right: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
         }
 
         div#header {
@@ -96,13 +101,14 @@
         }
     </style>
 </head>
-
 <body>
+
 <%
    TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttribute("session");
 
     if(stateful != null && stateful.isLoggedIn()) {
 %>
+
 <div id="header">
     <h1>Temperature Suite Web App</h1>
 </div>
@@ -126,14 +132,39 @@
         <input type="text" name="username" id="username" disabled value="<%= username %>"/><br/><br/>
         <label for="name">Full Name:</label>
         <input type="text" name="name" id="name" value="<%= name %>" required/><br/><br/>
-        <label for="password">Change Password:</label>
-        <input type="password" name="password" id="password" placeholder="New Password"/><br/><br/>
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm New Password"/><br/><br/>
+        <label for="change-password">Change Password</label>
+        <input type="checkbox" name="change-password" id="change-password" /><br/><br/>
+        <div id="div-password" style="display: none;">
+            <label for="password">New Password:</label>
+            <input type="password" name="password" id="password" placeholder="New Password" disabled/><br/><br/>
+            <label for="confirm-password">Confirm New Password:</label>
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm New Password" disabled/><br/><br/>
+        </div>
         <label for="access-level-dont-use">Access Level:</label>
-        <input type="text" id="access-level-dont-use" disabled value="<%= accessLevel %>"/>
+        <input type="text" id="access-level-dont-use" disabled value="<%= accessLevel %>"/><br/><br/>
+        <input type="submit" name="change-profile-submit" id="change-profile-submit" value="Save Changes"/>
     </form>
+    <script defer>
+        div_password = document.getElementById("div-password");
+        password = document.getElementById("password");
+        confirm_password = document.getElementById("confirm-password");
+        change_password = document.getElementById("change-password");
+
+        change_password.addEventListener("change", (event) => {
+            if(event.currentTarget.checked) {
+                div_password.style.display = "block";
+                password.disabled = confirm_password.disabled = false;
+                password.required = confirm_password.required = true;
+            }
+            else {
+                div_password.style.display = "none";
+                password.disabled = confirm_password.disabled = true;
+                password.required = confirm_password.required = false;
+            }
+        });
+    </script>
 <hr/>
 <% } else response.sendRedirect("/temperature-suite?error=unauthorized"); %>
+
 </body>
 </html>

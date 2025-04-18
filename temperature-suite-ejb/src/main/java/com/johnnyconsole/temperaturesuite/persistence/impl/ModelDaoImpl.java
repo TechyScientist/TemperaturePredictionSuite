@@ -8,6 +8,7 @@ import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 @Stateful
 @Alternative
@@ -26,6 +27,12 @@ public class ModelDaoImpl implements ModelDaoLocal {
         } catch(Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List getAllModels() {
+        Query query = manager.createNamedQuery("Model.FindAll");
+        return query.getResultList();
     }
 
     @Override

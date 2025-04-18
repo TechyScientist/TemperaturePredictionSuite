@@ -1,10 +1,4 @@
 <%@ page import="com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.web.util.Database" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.johnnyconsole.temperaturesuite.persistence.User" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -119,39 +113,33 @@ TemperatureStatefulLocal stateful = (TemperatureStatefulLocal) session.getAttrib
 </div>
 <div id="body">
     <% if(request.getParameter("error") != null) {
-        if(request.getParameter("error").equals("user-delete")) { %>
-    <p id="error">There was an error deleting the user.</p>
+        if(request.getParameter("error").equals("create-model")) { %>
+    <p id="error">There was an error creating the model.</p>
     <%  }
+        else if(request.getParameter("error").equals("model-exists")) { %>
+            <p id="error">The model name you entered already exists. Please choose a different name and try again.</p>
+    <% }
     }
-    else if(request.getParameter("user") != null && request.getParameter("user").equals("deleted")) { %>
-        <p id="success">The user has been deleted successfully.</p>
+    else if(request.getParameter("model") != null && request.getParameter("created").equals("added")) { %>
+        <p id="success">The model has been created successfully.</p>
     <% } %>
     <div id="intro-header">
-        <h2>User Management: Delete a User</h2>
+        <h2>Model Management: Create a Model</h2>
         <form action="dashboard.jsp" method="post">
             <input type="submit" value="Return to Dashboard">
         </form>
     </div>
-    <p>Select the user to delete from the options below. You cannot delete your own profile.</p>
-    <form action="DeleteUserServlet" method="post">
-        <label for="username">User to Delete:</label>
-        <select name="username" id="username" required>
-            <%
-                List userList = (List) session.getAttribute("deletable-users");
-                    if(userList.isEmpty()) { %>
-                        <option value="">No Users Found</option>
-                    <% }
-                    else {
-                        for (int i = 0; i < userList.size(); i++) {
-                            User user = (User) (userList.get(i));
-                            String username = user.getUsername(),
-                                    name = user.getName(),
-                                    type = user.getAccessLevel() == 0 ? "Standard User" : "Administrative User"; %>
-                        <option value="<%= username %>"><%= username %>: <%= name %> (<%= type %>)</option>
-                <%        }
-                    } %>
-        </select>
-        <input type="submit" name="delete-user-submit" id="delete-user-submit" value="Delete User"/>
+    <p>Fill in the information below to create a new model. All fields are required.</p>
+    <form action="CreateModelServlet" method="post">
+        <label for="name">Model Name:</label>
+        <input type="text" name="name" id="name" placeholder="Model Name" required/><br/><br/>
+        <label for="class">Model Class:</label>
+        <select name="class" id="class">
+            <option value="REPTree">REPTree Classifier</option>
+        </select><br/><br/>
+        <label for="data">Training Data (*.csv):</label>
+        <input type="file" name="data" id="data" accept="text/csv" placeholder="Training Data (*.csv)" required/><br/><br/>
+        <input type="submit" name="add-user-submit" id="create-model-submit" value="Create Model"/>
     </form>
 </div>
 
