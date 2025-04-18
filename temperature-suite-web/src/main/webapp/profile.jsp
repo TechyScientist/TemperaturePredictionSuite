@@ -110,7 +110,11 @@
     <div id="intro-header">
         <% String username = stateful.loggedInUsername(),
                 name = stateful.loggedInName(),
-                accessLevel = stateful.loggedInAccessLevel() == 0 ? "Standard User" : "Administrative User";%>
+                accessLevel = stateful.loggedInAccessLevel() == 0 ? "Standard User" : "Administrative User";
+            if(username.equals("guest")) {
+                response.sendRedirect("dashboard.jsp");
+            }
+        %>
         <h2>My Profile</h2>
         <form action="dashboard.jsp" method="post">
             <input type="submit" value="Return to Dashboard">

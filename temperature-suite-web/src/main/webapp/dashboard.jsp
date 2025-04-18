@@ -125,8 +125,9 @@
     <p>You are currently authorized to access the following tools:</p>
     <ul>
         <li><a href="make-prediction.jsp">Make Prediction</a></li>
-        <li><a href="profile.jsp">My Profile</a></li>
-        <% if(stateful.loggedInAccessLevel() == 1) { %>
+        <% if(!stateful.loggedInUsername().equals("guest")) { %>
+            <li><a href="profile.jsp">My Profile</a></li>
+        <% } if(stateful.loggedInAccessLevel() == 1) { %>
             <li>User Management:
                 <ul>
                     <li><a href="add-user.jsp">Add a User</a></li>
