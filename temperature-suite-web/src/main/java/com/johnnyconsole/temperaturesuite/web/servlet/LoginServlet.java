@@ -2,6 +2,7 @@ package com.johnnyconsole.temperaturesuite.web.servlet;
 
 import com.johnnyconsole.temperaturesuite.ejb.interfaces.TemperatureStatefulLocal;
 import com.johnnyconsole.temperaturesuite.persistence.User;
+import com.johnnyconsole.temperaturesuite.persistence.interfaces.ModelDaoLocal;
 import com.johnnyconsole.temperaturesuite.persistence.interfaces.UserDaoLocal;
 
 import javax.ejb.EJB;
@@ -21,6 +22,9 @@ public class LoginServlet extends HttpServlet {
     @EJB
     TemperatureStatefulLocal stateful;
 
+    @EJB
+    ModelDaoLocal modelDao;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws IOException {
@@ -34,6 +38,7 @@ public class LoginServlet extends HttpServlet {
 
                     HttpSession session = request.getSession();
                     session.setAttribute("session", stateful);
+                    session.setAttribute("models", modelDao.getAllModels());
                     response.sendRedirect("dashboard.jsp");
                 }
                 else {
